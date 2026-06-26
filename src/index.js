@@ -1,7 +1,10 @@
 import mongoose from "mongoose";
 import express from "express";
-import {DB_NAME} from "./constants.js";
+import dns from "node:dns";
+import { app } from "./app.js";
 import connectDB from "./db/index.js";
+
+dns.setServers(['8.8.8.8', '8.8.4.4']);
 
 import dotenv from "dotenv";
 
@@ -9,11 +12,9 @@ import dotenv from "dotenv";
 dotenv.config({
     path: './.env'
 })
-// require{'dotenv'}.config({path: './env'});
-
 connectDB()
 .then(()=>{
-    app.on("ERROR",(error)=>{
+    app.on("error",(error)=>{
         console.log("ERROR: ",error)
     })
     app.listen(process.env.PORT || 8000, ()=>{
