@@ -29,8 +29,7 @@ const userSchema = new mongoose.Schema(
             required: true
         },
         coverImage: {
-            url: String,
-            public_id: String
+            type: String,
         },
         watchHistory: [
             {
@@ -74,7 +73,7 @@ userSchema.methods.generateaccesstoken = async function(){
     }
     )
 }
-userSchema.methods.generatereferencetoken = async function(){
+userSchema.methods.generaterefreshtoken = async function(){
     return await jwt.sign({
         _id: this._id,
     },

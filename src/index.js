@@ -1,24 +1,25 @@
-import mongoose from "mongoose";
-import express from "express";
-import dns from "node:dns";
-import { app } from "./app.js";
-import connectDB from "./db/index.js";
-
-dns.setServers(['8.8.8.8', '8.8.4.4']);
-
 import dotenv from "dotenv";
-
-
 dotenv.config({
     path: './.env'
 })
+
+import mongoose from "mongoose";
+import express from "express";
+import dns from "node:dns";
+
+dns.setServers(['8.8.8.8', '8.8.4.4']);
+
+import { app } from "./app.js";
+import connectDB from "./db/index.js";
+
+
 connectDB()
 .then(()=>{
     app.on("error",(error)=>{
         console.log("ERROR: ",error)
     })
     app.listen(process.env.PORT || 8000, ()=>{
-        console.log(`App is running on port no: ${process.env.PORT}`)
+        console.log(`App is running on port no: ${process.env.PORT || 8000}`)
     })
 })
 .catch((error) => {
